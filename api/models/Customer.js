@@ -8,14 +8,40 @@
 module.exports = {
 
   attributes: {
-      id: "number",
-	    name: "string",
-	    address: "string",
-	    city: "string",
-	    state: "string",
-	    zip: "string",
-	    email: "string",
-	    cellphone: "string"
-  }
+      id: { 
+        type: "number",
+        autoPK: true,
+        required: true
+      },
+	    name: {
+	    	type: "string",
+	    	required: true
+	    },
+	    address: {
+	    	type: "string",
+	    	required: true
+	    },
+	    city: {
+	    	type: "string",
+	    	required: true
+	    },
+	    state: {
+	    	type: "string",
+	    	required: true
+	    },
+	    zip: {
+	    	type: "string",
+	    	required: true
+	    },
+	    homephone: {
+	    	type: "string"
+	    },
+	    cellphone: {
+	    	type:"string"
+	    },
+	    email: {
+	    	type: "string",
+	    }
+	 }
 };
 
