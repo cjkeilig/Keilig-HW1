@@ -1,4 +1,9 @@
-<form action="create">
+<ul>
+<% _.each(list, function(customer) { %>
+  <li><%= customer.id %> - <%= customer.name %><a href="customer/destroy?id=<%=customer.id%>">Delete</a>
+  <% }) %>
+</ul>
+<form action="customer/create">
     <input type="text" name="name" required>Name
     <input type="text" name="address" required>Address
     <input type="text" name="city" required>City
@@ -8,4 +13,9 @@
     <input type="text" name="cellphone">Cell
     <input type="text" name="email">Email
     <input type="submit">
+</form>
+<br>
+<form action="customer/destroy">
+	<input type="number" name="id" required>Delete by id
+	<input type="submit">
 </form>

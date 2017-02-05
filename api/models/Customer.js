@@ -8,11 +8,6 @@
 module.exports = {
 
   attributes: {
-      id: { 
-        type: "number",
-        autoPK: true,
-        required: true
-      },
 	    name: {
 	    	type: "string",
 	    	required: true

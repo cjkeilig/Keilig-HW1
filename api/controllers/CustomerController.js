@@ -7,7 +7,12 @@
 
 module.exports = {
     'new' : function(req, res) {
-        res.view();
-    }	
-};
+		Customer.query('SELECT * FROM customer', function(err, customers) {
+			sails.log(customers);
+            res.view('customer/new', {
+				list: customers
+		    });
+        });
+	}
+}
 
