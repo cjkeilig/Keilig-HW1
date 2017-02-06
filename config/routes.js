@@ -32,7 +32,8 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'get /': 'CustomerController.new' 
+  'get /': 'CustomerController.customer',
+  'get /customer/edit' : 'CustomerController.edit'
 
   /***************************************************************************
   *                                                                          *

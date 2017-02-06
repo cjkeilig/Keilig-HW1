@@ -1,6 +1,8 @@
 <ul>
 <% _.each(list, function(customer) { %>
-  <li><%= customer.id %> - <%= customer.name %><a href="customer/destroy?id=<%=customer.id%>">Delete</a>
+  <li><%= customer.id %> - <%= customer.name %>
+    <a href="customer/destroy?id=<%=customer.id%>">Delete</a>
+    <a href="customer/edit?id=<%=customer.id%>">Edit</a>
   <% }) %>
 </ul>
 <form action="customer/create">
