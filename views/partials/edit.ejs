@@ -1,0 +1,9 @@
+<form action="update">
+<% for(var prop in cust) { %> 
+    <% if(typeof(cust[prop])=="function"){continue;} %>
+    <%=prop%><input value="<%=cust[prop]%>" name="<%=prop%>"><br> <% } %>
+    <button><a href="/">Cancel</a></button>
+    <input type="submit">
+</form>
+    
+
