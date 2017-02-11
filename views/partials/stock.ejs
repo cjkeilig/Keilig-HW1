@@ -1,0 +1,70 @@
+<%=cust.name%>
+<table class="table table-hover">
+  <thead,
+    <tr>
+      <th>Symbol</th>
+      <th>Name</th>
+      <th>Number of Shares</th>
+      <th>Purchase Price</th>
+      <th>Purchase Date</th>
+    </tr>
+  </thead>
+  <tbody>
+
+<% for(var prop in cust.stocks) { %> 
+  <% if(typeof(cust.stocks[prop])=="function"){continue;} %>
+  <tr>
+    <td><%=cust.stocks[prop].symbol%>
+    </td>
+    <td>
+    <%=cust.stocks[prop].name%>
+    </td>
+    <td>
+    <%=cust.stocks[prop].numshares%>
+    </td>
+    <td>
+    <%=cust.stocks[prop].purchasePrice%>
+    </td>
+    <td>
+    <%=cust.stocks[prop].purchaseDate%>
+    </td>
+  </tr><% } %>
+  </tbody>
+</table>
+<form class="form-horizontal" role="form" action="createStock">
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="symbol">
+      Symbol
+    </label>
+    <div class="col-sm-10">
+      <input class="form-control" type="text" name="symbol" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="name">
+      Name
+    </label>
+    <div class="col-sm-10">
+      <input class="form-control" type="number" name="name" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="purchasePrice">
+      Purchase Price
+    </label>
+    <div class="col-sm-10">
+      <input class="form-control" type="text" name="purchasePrice" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="purchaseDate">
+      Purchase Date
+    </label>
+    <div class="col-sm-10">
+      <input class="form-control" type="text" name="purchaseDate" required>
+    </div>
+  </div>
+  <input type="hidden" value=<%=cust['id']%> name="owner" required>Id
+  <input type="submit">
+</form>
+

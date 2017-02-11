@@ -1,7 +1,14 @@
-<form action="update">
+<form class="form-horizontal" role="form" action="update">
 <% for(var prop in cust) { %> 
-    <% if(typeof(cust[prop])=="function"){continue;} %>
-    <%=prop%><input value="<%=cust[prop]%>" name="<%=prop%>"><br> <% } %>
+    <% if(typeof(cust[prop])=="function" || prop==="createdAt" || prop==="id"||prop=="updatedAt"){continue;} %>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="<%=prop%>">
+      <%=prop%></label>
+      <div class="col-sm-10">
+        <input class="form-control" value="<%=cust[prop]%>" name="<%=prop%>"><br>
+     </div>
+    </div
+<% } %>
     <button><a href="/">Cancel</a></button>
     <input type="submit">
 </form>

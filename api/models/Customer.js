@@ -36,7 +36,15 @@ module.exports = {
 	    },
 	    email: {
 	    	type: "string",
-	    }
-	 }
+	    },
+	    assets : {
+			collection: 'asset',
+			via: 'owner'
+		},
+		stocks : {
+    		collection: 'stock',
+    		via: 'owner'
+		}
+  }
 };
 
