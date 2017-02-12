@@ -31,7 +31,7 @@ module.exports = {
 	    	});
 		});
 	},
-	'update' : function(req, res) {
+	'updates' : function(req, res) {
 		Customer.update(parseInt(req.param('id'),10),req.allParams()).exec(function(err, updated) {
 			if(err) { sails.log.debug(err);}
 			else {
@@ -101,6 +101,53 @@ module.exports = {
 	    	});
 		});
 		
+	},
+	'createAsset' : function(req,res) {
+	    var q = { where: {id:parseInt(req.param('owner'),10)}, limit: 1 };
+		var list;
+		Customer.query('SELECT * FROM customer', function(err, customers) { 
+			list = customers;
+		});
+		createObj = req.allParams();
+		createObj['owner'] = parseInt(createObj['owner'],10);
+		console.log(createObj)
+		Asset.create(createObj,function(err, stock) { // find customer
+	    	if(err) {
+	    		sails.log(err);
+	    	}
+		});
+		Customer.find(q).populateAll().exec(function(err, retCust) {
+			console.log(retCust);// find customer
+	    	res.view('customer/customer', {
+	    		list: list,
+	    		part: 'stock',
+	    		cust: retCust,
+	    	});
+		});
+	},
+	'destroyStock': function(req, res) {
+		var q = { where: {id:parseInt(req.param('id'),10)} };
+		Stock.destroy(q).exec(function(err){
+			if(err) {
+				sails.log(err);
+			}
+			sails.log(parseInt(req.param('custid'),10));
+			var red = '/customer/stock?id=' + parseInt(req.param('custid'),10);
+			res.redirect(red);
+		});
+	},
+	'destroyAsset': function(req, res) {
+		var q = { where: {id:parseInt(req.param('id'),10)} };
+		Asset.destroy(q).exec(function(err){
+			if(err) {
+				sails.log(err);
+			}
+			sails.log(parseInt(req.param('custid'),10));
+			var red = '/customer/stock?id=' + parseInt(req.param('custid'),10);
+			res.redirect(red);
+		});
+	
 	}
+	
 };
 

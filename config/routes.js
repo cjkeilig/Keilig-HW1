@@ -34,10 +34,13 @@ module.exports.routes = {
 
   'get /': 'CustomerController.customer',
   'get /customer/edit' : 'CustomerController.edit',
-  'get /customer/update' : 'CustomerController.update',
+  'get /customer/updates' : 'CustomerController.updates',
   'get /customer/add' : 'CustomerController.add',
   'get /customer/stock' : 'CustomerController.stock',
-  'get /customer/createStock': 'CustomerController.createStock'
+  'get /customer/createStock': 'CustomerController.createStock',
+  'get /customer/createAsset' : 'CustomerController.createAsset',
+  'get /customer/destroyStock' : 'CustomerController.destroyStock',
+  'get /customer/destroyAsset' : 'CustomerController.destroyAsset'
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
