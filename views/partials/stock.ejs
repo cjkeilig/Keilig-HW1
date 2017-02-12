@@ -32,7 +32,7 @@
     <%=cust.stocks[prop].purchaseDate%>
     </td>
     <td><a href="destroyStock?id=<%=cust.stocks[prop].id%>&custid=<%=cust.id%>"><span class="glyphicon glyphicon-trash"></a></span>
-        <a href="editStock?id=<%=cust.stocks[prop].id%>&custid=<%=cust.id%>"><span class="glyphicon glyphicon-edit"></a></span>
+        <span id="edit" value="<%=JSON.stringify(cust.stocks[prop])%>" class="glyphicon glyphicon-edit stockEdits"></span>
     </td>
   </tr><% } %>
   </tbody>
@@ -60,12 +60,40 @@
       <td><%=cust.assets[prop].recentValue%></td>
       <td><%=cust.assets[prop].recentDate%></td>
       <td><a href="destroyAsset?id=<%=cust.assets[prop].id%>&custid=<%=cust.id%>"><span class="glyphicon glyphicon-trash"></a></span>
-          <a href="editAsset?id=<%=cust.assets[prop].id%>&custid=<%=cust.id%>"><span class="glyphicon glyphicon-edit"></a></span>
+          <span value="<%=JSON.stringify(cust.assets[prop])%>" class="glyphicon glyphicon-edit assetEdits"></span>
       </td>
     </tr><% } %>
   </tbody>
 </table>
 </div>
+<script>var sElms = document.getElementsByClassName('stockEdits');
+        for(var i=0; i<sElms.length;i++) {
+          sElms[i].addEventListener("click", function() {
+            document.getElementById("editStock").style.display='block';
+            var sto = JSON.parse(this.getAttribute("value"));
+            document.getElementById("symbol").value = sto.symbol;
+            document.getElementById("name").value = sto.name;
+            document.getElementById("numshares").value = sto.numshares;
+            document.getElementById("purchasePrice").value = sto.purchasePrice;
+            document.getElementById("purchaseDate").value = sto.purchaseDate;
+            document.getElementById("sid").value = sto.id;
+          });
+        }
+        var aElms = document.getElementsByClassName('assetEdits');
+        for(var i=0;i<aElms.length; i++) {
+          aElms[i].addEventListener("click", function() {
+            document.getElementById("editAsset").style.display='block';
+            var sto = JSON.parse(this.getAttribute("value"));
+            document.getElementById("category").value = sto.category;
+            document.getElementById("description").value = sto.description;
+            document.getElementById("acquiredDate").value = sto.acquiredDate;
+            document.getElementById("acquiredValue").value = sto.acquiredValue;
+            document.getElementById("recentDate").value = sto.recentDate;
+            document.getElementById("recentValue").value = sto.recentValue;
+            document.getElementById("aid").value = sto.id;
+            });
+        }
+</script>
 <div class="card card-outline-primary">
 <div class="btn-group">
   <button id="addS" type="button" class="btn btn-primary">Add Stock</button>
@@ -179,5 +207,106 @@
   <input type="hidden" value="<%=cust['id']%>" name="owner" required>
   <input class="btn btn-default pull-right" type="submit">
 </form>
+<form id="editStock" class="form-horizontal" role="form" action="editStock" style="display:none">
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="symbol">
+      Symbol
+    </label>
+    <div class="col-sm-10">
+      <input id="symbol" class="form-control" type="text" name="symbol" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="name">
+      Name
+    </label>
+    <div class="col-sm-10">
+      <input id="name" class="form-control" type="text" name="name" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="numshares">
+      Number of shares
+    </label>
+    <div class="col-sm-10">
+      <input id="numshares" class="form-control" type="number" name="numshares" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="purchasePrice">
+      Purchase Price
+    </label>
+    <div class="col-sm-10">
+      <input id="purchasePrice" class="form-control" type="text" name="purchasePrice" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="purchaseDate">
+      Purchase Date
+    </label>
+    <div class="col-sm-10">
+      <input id="purchaseDate" class="form-control" type="text" name="purchaseDate" required>
+    </div>
+  </div>
+  <input type="hidden" value=<%=cust['id']%> name="owner" required>
+  <input type="hidden" id="sid" name="id" required>
+  <a class="btn btn-default pull-right" href="/customer/stock?id=<%=cust.id%>">Cancel</a>
+  <input class="btn btn-default pull-right" type="submit">
+</form>
+<form id="editAsset" class="form-horizontal" role="form" action="editAsset" style="display:none">
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="category">
+      Category
+    </label>
+    <div class="col-sm-10">
+      <input id="category" class="form-control" type="text" name="category" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="description">
+      Description
+    </label>
+    <div class="col-sm-10">
+      <input id="description" class="form-control" type="text" name="description" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="acquiredDate">
+      Date Acquired
+    </label>
+    <div class="col-sm-10">
+      <input id="acquiredDate" class="form-control" type="text" name="acquiredDate" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="acquiredValue">
+      Acquired Value
+    </label>
+    <div class="col-sm-10">
+      <input id="acquiredValue" class="form-control" type="text" name="acquiredValue" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="recentDate">
+      Recent Date
+    </label>
+    <div class="col-sm-10">
+      <input id="recentDate" class="form-control" type="text" name="recentDate" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="recentValue">
+      Recent Value
+    </label>
+    <div class="col-sm-10">
+      <input id="recentValue" class="form-control" type="text" name="recentValue" required>
+    </div>
+  </div>
+  <input type="hidden" value="<%=cust['id']%>" name="owner" required>
+  <input type="hidden" id="aid" name="id" required>
+  <a class="btn btn-default pull-right" href="/customer/stock?id=<%=cust.id%>">Cancel</a>
+  <input class="btn btn-default pull-right" type="submit">
+</form>
+
 </div>
 

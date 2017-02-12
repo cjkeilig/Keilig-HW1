@@ -147,7 +147,22 @@ module.exports = {
 			res.redirect(red);
 		});
 	
+	},
+	'editStock' : function(req, res) {
+		Stock.update(parseInt(req.param('id'),10),req.allParams()).exec(function(err, updated) {
+			if(err) {
+				sails.log(err);
+			}
+			res.redirect('/customer/stock?id=' + parseInt(req.param('owner'),10));
+		});
+	},
+	'editAsset' : function(req, res) {
+		Asset.update(parseInt(req.param('id'),10),req.allParams()).exec(function(err, updated) {
+			if(err) {
+				sails.log(err);
+			}
+			res.redirect('/customer/stock?id=' + parseInt(req.param('owner'),10));
+		});
 	}
-	
 };
 
