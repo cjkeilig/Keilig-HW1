@@ -32,6 +32,7 @@ var jsFilesToInject = [
   'js/dependencies/**/*.js',
   'js/vendor/jquery-3.1.1.min.js',
   'js/vendor/bootstrap.min.js',
+  'js/vendor/d3.min.js',
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
   'js/**/*.js'

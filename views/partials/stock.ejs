@@ -1,6 +1,63 @@
-
-<%=cust.name%>
-
+<script>window.onload =  function() {
+  var nS = $('.nS').toArray();
+  var sN = $('.sN').toArray();
+  var aN = $('.aN').toArray();
+  var pP = $('.pP').toArray();
+  var rV = $('.rV').toArray();
+  var sTotal = 0;
+  var aTotal = 0;
+  var data = [];
+  for(var i in nS) {
+    console.log(parseInt(pP[i].innerText));
+    sTotal += 
+     data.push({"investment": sN[i].innerText, "value" : parseInt(nS[i].innerText,10) * parseInt(pP[i].innerText,10)});
+  }
+  for(var i in rV) {
+    aTotal += parseInt(rV[i].innerText,10);
+    data.push({"investment": aN[i].innerText, "value" : parseInt(rV[i].innerText,10)});
+  };
+  console.log(data);
+  var width = 300,
+	height = 300,
+	radius = Math.min(width, height) / 2;
+	var color = d3.scaleOrdinal()
+	.range(["#ff0000", "#ff4000", "#ff8000", "#ffbf00","#ffff00","#bfff00","#80ff00","#40ff00", "#00ff00","#00ff40","#00ff80","#00ffbf","#00ffff","#00bfff","#0080ff","#0040ff","#0000ff","#4000ff","#8000ff","#bf00ff","#cc00ff","#ff00ff"]);
+	var pie = d3.pie()
+	
+	.value(function(d) { return d.value; })(data);
+	
+	var arc = d3.arc()
+	.outerRadius(radius - 10)
+	.innerRadius(0);
+	
+  var labelArc = d3.arc()
+	.outerRadius(radius - 40)
+	.innerRadius(radius - 40);
+	
+	var svg = d3.select("#svg")
+	.append("svg")
+	.attr("width", width)
+	.attr("height", height)
+		.append("g")
+		.attr("transform", "translate(" + width/2 + "," + height/2 +")");
+	
+	var g = svg.selectAll("arc")
+	.data(pie)
+	.enter().append("g")
+	.attr("class", "arc");
+	
+	g.append("path")
+	.attr("d", arc)
+	.style("fill", function(d) { return color(d.data.value);});
+	// Credit to Chuck Grimmett
+	g.append("text")
+	.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+	.text(function(d) { return d.data.investment;})	
+	.style("fill", "#fff");
+}
+</script>
+<div class="card card-outline-primary"><h1><%=cust.name%></h1></div>
+<div id="svg"></div>
 <div class="card card-outline-primary">
 <table class="table table-hover">
   <thead>
@@ -19,20 +76,20 @@
   <tr>
     <td><%=cust.stocks[prop].symbol%>
     </td>
-    <td>
+    <td class="sN">
     <%=cust.stocks[prop].name%>
     </td>
-    <td>
+    <td class="nS">
     <%=cust.stocks[prop].numshares%>
     </td>
-    <td>
+    <td class="pP">
     <%=cust.stocks[prop].purchasePrice%>
     </td>
     <td>
     <%=cust.stocks[prop].purchaseDate%>
     </td>
-    <td><a href="destroyStock?id=<%=cust.stocks[prop].id%>&custid=<%=cust.id%>"><span class="glyphicon glyphicon-trash"></a></span>
-        <span id="edit" value="<%=JSON.stringify(cust.stocks[prop])%>" class="glyphicon glyphicon-edit stockEdits"></span>
+    <td><a href="destroyStock?id=<%=cust.stocks[prop].id%>&custid=<%=cust.id%>"><span class="glyphicon glyphicon-trash"></span></a>
+        <a><span id="edit" value="<%=JSON.stringify(cust.stocks[prop])%>" class="glyphicon glyphicon-edit stockEdits"></span></a>
     </td>
   </tr><% } %>
   </tbody>
@@ -54,13 +111,13 @@
     <% if(typeof(cust.assets[prop])=="function"){continue;} %>
     <tr>
       <td><%=cust.assets[prop].category%></td>
-      <td><%=cust.assets[prop].description%></td>
+      <td class="aN"><%=cust.assets[prop].description%></td>
       <td><%=cust.assets[prop].acquiredValue%></td>
       <td><%=cust.assets[prop].acquiredDate%></td>
-      <td><%=cust.assets[prop].recentValue%></td>
+      <td class="rV"><%=cust.assets[prop].recentValue%></td>
       <td><%=cust.assets[prop].recentDate%></td>
       <td><a href="destroyAsset?id=<%=cust.assets[prop].id%>&custid=<%=cust.id%>"><span class="glyphicon glyphicon-trash"></a></span>
-          <span value="<%=JSON.stringify(cust.assets[prop])%>" class="glyphicon glyphicon-edit assetEdits"></span>
+          <a><span value="<%=JSON.stringify(cust.assets[prop])%>" class="glyphicon glyphicon-edit assetEdits"></span></a>
       </td>
     </tr><% } %>
   </tbody>
@@ -112,6 +169,7 @@
   };
 </script>
 <form id="createStock" class="form-horizontal" role="form" action="createStock" style="display:none">
+  <h2>Create Stock</h2>
   <div class="form-group">
     <label class="control-label col-sm-2" for="symbol">
       Symbol
@@ -153,9 +211,11 @@
     </div>
   </div>
   <input type="hidden" value=<%=cust['id']%> name="owner" required>
+  <a class="btn btn-default pull-right" href="/customer/stock?id=<%=cust.id%>">Cancel</a>
   <input class="btn btn-default pull-right" type="submit">
 </form>
 <form id="createAsset" class="form-horizontal" role="form" action="createAsset" style="display:none">
+  <h2>Create Asset</h2>
   <div class="form-group">
     <label class="control-label col-sm-2" for="category">
       Category
@@ -205,9 +265,11 @@
     </div>
   </div>
   <input type="hidden" value="<%=cust['id']%>" name="owner" required>
+  <a class="btn btn-default pull-right" href="/customer/stock?id=<%=cust.id%>">Cancel</a>
   <input class="btn btn-default pull-right" type="submit">
 </form>
 <form id="editStock" class="form-horizontal" role="form" action="editStock" style="display:none">
+  <h2>Edit Stock</h2>
   <div class="form-group">
     <label class="control-label col-sm-2" for="symbol">
       Symbol
@@ -254,6 +316,7 @@
   <input class="btn btn-default pull-right" type="submit">
 </form>
 <form id="editAsset" class="form-horizontal" role="form" action="editAsset" style="display:none">
+  <h2>Edit Asset</h2>
   <div class="form-group">
     <label class="control-label col-sm-2" for="category">
       Category

@@ -2,6 +2,18 @@
     margin-left:10%;
     margin-right:10%;
 }
+#svg {
+    margin-left:10%;
+    margin-right:10%;
+}
 form {
-    margin-top:20px;
+    margin-top:40px;
+}
+.arc text {
+  font: 14px sans-serif;
+  text-anchor: middle;
+}
+
+.arc path {
+  stroke: #fff;
 }
