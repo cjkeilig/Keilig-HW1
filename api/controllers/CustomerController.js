@@ -32,10 +32,8 @@ module.exports = {
 	},
 	'updates' : function(req, res) {
 		Customer.update(parseInt(req.param('id'),10),req.allParams()).exec(function(err, updated) {
-			if(err) { sails.log.debug(err);}
-			else {
-				res.redirect('/');
-			}
+			if(err) { sails.log(err);}
+			res.redirect('/');
 		});
 	},
 	'add' : function(req, res) {
@@ -51,6 +49,12 @@ module.exports = {
 		Customer.create(req.allParams()).exec(function(err, record) {
 			res.redirect('/');
 	    });
+	},
+	'destroy' : function(req, res) {
+		Customer.destroy(req.allParams()).exec(function(err) {
+			if(err) { sails.log(err);}
+			res.redirect('/');
+		});
 	},
 	'stock': function(req, res) { 
 		var q = { where: {id:parseInt(req.param('id'),10)}, limit: 1 };
