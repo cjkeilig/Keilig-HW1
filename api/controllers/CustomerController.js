@@ -11,7 +11,7 @@ module.exports = {
             res.view('customer/customer', {
 				list: customers,
 				part: null,
-				cust: []
+				cust: ['test']
 		    });
         });
 	},
@@ -41,7 +41,7 @@ module.exports = {
           res.view('customer/customer', {
           	list: customers,
           	part: 'add',
-			cust: []
+			cust: ['test']
           });
      	});
 	},
