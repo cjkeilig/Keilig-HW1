@@ -42,12 +42,13 @@ module.exports.connections = {
   ***************************************************************************/
   mySqlServer: {
     adapter: 'sails-mysql',
-    host: 'localhost',
-    user: 'worker', //optional
-    password: 'password', //optional
-    database: 'c9' //optional
+    host: 'us-cdbr-iron-east-04.cleardb.net',
+    user: 'b9ed94608b0e2e', //optional
+    password: '6ad31735', //optional
+    database: 'heroku_99cee46134e2045' //optional
   },
-
+//mysql://b9ed94608b0e2e:6ad31735@us-cdbr-iron-east-04.cleardb.net/heroku_99cee46134e2045?reconnect=true`
+//mysql://b9ed94608b0e2e:6ad31735@us-cdbr-iron-east-04.cleardb.net/heroku_99cee46134e2045?reconnect=true
   /***************************************************************************
   *                                                                          *
   * MongoDB is the leading NoSQL database.                                   *
