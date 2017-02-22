@@ -7,7 +7,7 @@
 
 module.exports = {
     'customer' : function(req, res) {
-		Customer.query('SELECT * FROM customer', function(err, customers) { 
+		Customer.find(function(err, customers) { 
             res.view('customer/customer', {
 				list: customers,
 				part: null,
@@ -18,7 +18,7 @@ module.exports = {
 	'edit' : function(req, res) {
 		var q = { where: {id:parseInt(req.param('id'),10)}, limit: 1 };
 		var list;
-		Customer.query('SELECT * FROM customer', function(err, customers) { 
+		Customer.find(function(err, customers) { 
 			list = customers;
 		});
 		sails.log.debug(q);
@@ -37,7 +37,7 @@ module.exports = {
 		});
 	},
 	'add' : function(req, res) {
-     	Customer.query('SELECT * FROM customer', function(err, customers) { 
+     	Customer.find(function(err, customers) { 
           res.view('customer/customer', {
           	list: customers,
           	part: 'add',
@@ -59,7 +59,7 @@ module.exports = {
 	'stock': function(req, res) { 
 		var q = { where: {id:parseInt(req.param('id'),10)}, limit: 1 };
 		var list;
-		Customer.query('SELECT * FROM customer', function(err, customers) { 
+		Customer.find(function(err, customers) { 
 			list = customers;
 		});
 		sails.log(q);
