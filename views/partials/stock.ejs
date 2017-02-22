@@ -54,6 +54,13 @@
 	.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
 	.text(function(d) { return d.data.investment;})	
 	.style("fill", "#fff");
+	
+	// Initilize chart for value history
+	// get all symbol and purchase price into object
+	
+	// for each key in object, make JSON request to /customer/quote?symbol=whatever
+	
+	  // Get JSON object back, and put into chart 
 }
 </script>
 <div class="card card-outline-primary"><h1><%=cust.name%></h1></div>

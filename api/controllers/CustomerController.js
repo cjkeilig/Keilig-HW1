@@ -74,6 +74,7 @@ module.exports = {
 	'createStock' : function(req,res) {
 		createObj = req.allParams();
 		createObj['owner'] = parseInt(createObj['owner'],10);
+		DailyQuoteService.checkNewQuote(createObj['symbol']);
 		Stock.create(createObj,function(err, stock) { // find customer
 	    	if(err) {
 	    		sails.log(err);
@@ -126,6 +127,9 @@ module.exports = {
 			}
 			res.redirect('/customer/stock?id=' + parseInt(req.param('owner'),10));
 		});
+	},
+	'quote' : function(req, res) {
+		res.JSON(DailyQuoteService.getBySymbol(req.param('symbol')));
 	}
 };
 
