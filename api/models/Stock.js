@@ -21,7 +21,7 @@ module.exports = {
       type: 'string'
     },
     purchaseDate : {
-      type: 'string'
+      type: 'date'
     },
     owner: { 
     model: 'customer',
