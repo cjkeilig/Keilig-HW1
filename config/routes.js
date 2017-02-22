@@ -29,10 +29,10 @@ module.exports.routes = {
   *                                                                          *
   * (Alternatively, remove this and add an `index.html` file in your         *
   * `assets` directory)                                                      *
-  *                                                                          *
   ***************************************************************************/
 
   'get /': 'CustomerController.customer',
+  'get /customer/create' : 'CustomerController.create',
   'get /customer/edit' : 'CustomerController.edit',
   'get /customer/updates' : 'CustomerController.updates',
   'get /customer/add' : 'CustomerController.add',
