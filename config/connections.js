@@ -75,7 +75,7 @@ module.exports.connections = {
   *                                                                          *
   *                                                                          *
   ***************************************************************************/
-  heroku_postgres : {
+/*    heroku_postgres : {
     adapter: 'sails-postgresql',
     user: 'btdvbqdupkaiit',
     password: 'fc1b14ba124ea3e5d06d1bf8bb3fe04f3710e70153199927c8a59821f8d4b843',
@@ -83,8 +83,16 @@ module.exports.connections = {
     port: '5432',
     database: 'd1of1fnj600pph',
     ssl: false
-  }
-
+  }*/
+  
+    heroku_postgres : {
+      adapter: 'sails-postgresql',
+      user: 'ubuntu',
+      password: 'password',
+      host: 'localhost',
+      port: '5432',
+      database: 'c9Pg'
+    }
 
   /***************************************************************************
   *                                                                          *

@@ -34,7 +34,7 @@
 	.outerRadius(radius - 40)
 	.innerRadius(radius - 40);
 	
-	var svg = d3.select("#svg")
+	var svg = d3.select("#piesvg")
 	.append("svg")
 	.attr("width", width)
 	.attr("height", height)
@@ -56,7 +56,25 @@
 	.style("fill", "#fff");
 	
 	// Initilize chart for value history
-	// get all symbol and purchase price into object
+	var svg = d3.select("#chartsvg")
+	  .append("svg")
+	  .attr("width", width)
+	  .attr("height", height)
+		.append("g")
+		.attr("transform", "translate(" + width/2 + "," + height/2 +")");
+		
+	var sS = $(".sS").toArray();
+	var pD = $(".pD").toArray();
+	  $.ajax({
+	    dataType: 'json',
+      url: '/customer/quote?symbol=' + encodeURIComponent(sS[0].innerText) +'&purchaseDate=' + encodeURIComponent(pD[0].innerText),
+      async: true,
+      success: function(data) {
+        console.log(data);
+      }
+	 });
+	//};
+	// get all symbol, purchase price, date into object
 	
 	// for each key in object, make JSON request to /customer/quote?symbol=whatever
 	
@@ -64,7 +82,7 @@
 }
 </script>
 <div class="card card-outline-primary"><h1><%=cust.name%></h1></div>
-<div id="svg"></div>
+<div id="piesvg"></div><div id="chartsvg"></div>
 <div class="card card-outline-primary">
 <table class="table table-hover">
   <thead>
@@ -81,7 +99,7 @@
 <% for(var prop in cust.stocks) { %> 
   <% if(typeof(cust.stocks[prop])=="function"){continue;} %>
   <tr>
-    <td><%=cust.stocks[prop].symbol%>
+    <td class="sS"><%=cust.stocks[prop].symbol%>
     </td>
     <td class="sN">
     <%=cust.stocks[prop].name%>
@@ -92,7 +110,7 @@
     <td class="pP">
     <%=cust.stocks[prop].purchasePrice%>
     </td>
-    <td>
+    <td class="pD">
     <%=cust.stocks[prop].purchaseDate%>
     </td>
     <td><a href="destroyStock?id=<%=cust.stocks[prop].id%>&custid=<%=cust.id%>"><span class="glyphicon glyphicon-trash"></span></a>
@@ -214,7 +232,7 @@
       Purchase Date
     </label>
     <div class="col-sm-10">
-      <input class="form-control" type="text" name="purchaseDate" required>
+      <input class="form-control" type="date" name="purchaseDate" required>
     </div>
   </div>
   <input type="hidden" value=<%=cust['id']%> name="owner" required>

@@ -32,7 +32,7 @@ module.exports = {
 	},
 	'updates' : function(req, res) {
 		Customer.update(parseInt(req.param('id'),10),req.allParams()).exec(function(err, updated) {
-			if(err) { sails.log(err);}
+			if(err) { sails.log.debug(err);}
 			res.redirect('/');
 		});
 	},
@@ -52,7 +52,7 @@ module.exports = {
 	},
 	'destroy' : function(req, res) {
 		Customer.destroy(req.allParams()).exec(function(err) {
-			if(err) { sails.log(err);}
+			if(err) { sails.log.debug(err);}
 			res.redirect('/');
 		});
 	},
@@ -74,10 +74,11 @@ module.exports = {
 	'createStock' : function(req,res) {
 		createObj = req.allParams();
 		createObj['owner'] = parseInt(createObj['owner'],10);
-		DailyQuoteService.checkNewQuote(createObj['symbol']);
+		//sails.log.debug(DailyQuoteService);
+		//DailyQuoteService.checkNewQuote(createObj['symbol']);
 		Stock.create(createObj,function(err, stock) { // find customer
 	    	if(err) {
-	    		sails.log(err);
+	    		sails.log.debug(err);
 	    	}
 		});
 		res.redirect('/customer/stock?id='+parseInt(req.param('owner'),10));
@@ -87,7 +88,7 @@ module.exports = {
 		createObj['owner'] = parseInt(createObj['owner'],10);
 		Asset.create(createObj,function(err, stock) { // find customer
 	    	if(err) {
-	    		sails.log(err);
+	    		sails.log.debug(err);
 	    	}
 		});
 		res.redirect('/customer/stock?id='+parseInt(req.param('owner'),10));
@@ -96,7 +97,7 @@ module.exports = {
 		var q = { where: {id:parseInt(req.param('id'),10)} };
 		Stock.destroy(q).exec(function(err){
 			if(err) {
-				sails.log(err);
+				sails.log.debug(err);
 			}
 			var red = '/customer/stock?id=' + parseInt(req.param('custid'),10);
 			res.redirect(red);
@@ -106,7 +107,7 @@ module.exports = {
 		var q = { where: {id:parseInt(req.param('id'),10)} };
 		Asset.destroy(q).exec(function(err){
 			if(err) {
-				sails.log(err);
+				sails.log.debug(err);
 			}
 			var red = '/customer/stock?id=' + parseInt(req.param('custid'),10);
 			res.redirect(red);
@@ -115,7 +116,7 @@ module.exports = {
 	'editStock' : function(req, res) {
 		Stock.update(parseInt(req.param('id'),10),req.allParams()).exec(function(err, updated) {
 			if(err) {
-				sails.log(err);
+				sails.log.debug(err);
 			}
 			res.redirect('/customer/stock?id=' + parseInt(req.param('owner'),10));
 		});
@@ -123,13 +124,20 @@ module.exports = {
 	'editAsset' : function(req, res) {
 		Asset.update(parseInt(req.param('id'),10),req.allParams()).exec(function(err, updated) {
 			if(err) {
-				sails.log(err);
+				sails.log.debug(err);
 			}
 			res.redirect('/customer/stock?id=' + parseInt(req.param('owner'),10));
 		});
 	},
 	'quote' : function(req, res) {
-		res.JSON(DailyQuoteService.getBySymbol(req.param('symbol')));
+		var date1 = new Date(req.param('purchaseDate')); 
+		var date2 = new Date(); 
+		var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+		var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));  
+		sails.log.debug(diffDays);
+		var InteractiveChartDataInput = {"Normalized":false,"NumberOfDays":diffDays,"LabelInterval":1, "DataPeriod": "week", "Elements": [{ "Symbol":req.param('symbol'),"Type":"price","Params":["c"]}]};
+		sails.log.debug(InteractiveChartDataInput);
+		res.json(DailyQuoteService.apiCall(InteractiveChartDataInput));
 	}
 };
 

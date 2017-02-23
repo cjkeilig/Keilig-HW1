@@ -18,13 +18,13 @@ module.exports = {
       type: 'string'
     },
     acquiredDate : {
-      type: 'string'
+      type: 'date'
     },
     recentValue : {
       type: 'string'
     },
     recentDate : {
-      type: 'string'
+      type: 'date'
     },
     owner: { 
       model: 'customer',

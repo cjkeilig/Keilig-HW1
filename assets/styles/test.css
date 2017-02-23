@@ -2,9 +2,10 @@
     margin-left:10%;
     margin-right:10%;
 }
-#svg {
+#piesvg, #chartsvg {
     margin-left:10%;
     margin-right:10%;
+    float:left;
 }
 form {
     margin-top:40px;
