@@ -39,9 +39,9 @@ module.exports = {
       //  Returns object with the 3 fields
       sails.log.debug("in api call");
       
-      var url =  'http://dev.markitondemand.com/MODApis/Api/v2/InteractiveChart/json?parameters=' + encodeURIComponent(JSON.stringify(obj));
+      var url =  'http://dev.markitondemand.com/MODApis/Api/v2/InteractiveChart/json?parameters=' + JSON.stringify(obj);
       sails.log.debug(url);
-      http.get(url, function(res) {
+      /*https.get(url, function(res) {
           var body = '';
           res.on('data', function(chunk){
               body += chunk;
@@ -52,7 +52,7 @@ module.exports = {
           });
       }).on('error', function(err) {
           sails.log.debug(err);
-      });
+      });*/
     }
     /*getBySymbol: function(sym, pD) {
         DailyQuote.find({where:{symbol:sym, date: { '>': new Date(pD)}}}).exec(function(err,data) {
