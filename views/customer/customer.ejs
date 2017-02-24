@@ -20,7 +20,7 @@
       <% }) %>
     </ul>
 </div>
-<% if(!customer[0]) { %> <span id="suggestion"><--Add a customer!</span> <% } %>
+<% if(!cust[0]) { %> <span id="suggestion"><--Add a customer!</span> <% } %>
 <br>
 <% if (part!==null) { cust = cust[0];%>
 <%- partial('../partials/'+part,cust) %><% } %>
