@@ -135,7 +135,6 @@ module.exports = {
 		var timeDiff = Math.abs(date2.getTime() - date1.getTime());
 		var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));  
 		sails.log.debug(diffDays);
-		var InteractiveChartDataInput = {"Normalized":false,"NumberOfDays":diffDays,"DataPeriod":"Day","Elements":[{"Symbol":req.param('symbol'),"Type":"price","Params":["c"]}]};
 		sails.log.debug(InteractiveChartDataInput);
 		res.json(DailyQuoteService.apiCall(InteractiveChartDataInput));
 	}

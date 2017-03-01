@@ -39,7 +39,7 @@ module.exports = {
       //  Returns object with the 3 fields
       sails.log.debug("in api call");
       
-      var url =  'http://dev.markitondemand.com/MODApis/Api/v2/InteractiveChart/json?parameters=' + JSON.stringify(obj);
+      var url =  'http://dev.markitondemand.com/MODApis/Api/v2/InteractiveChart/json?parameters=' + encodeURIComponent(JSON.stringify(obj)).split("%22").join("\"");
       sails.log.debug(url);
       /*https.get(url, function(res) {
           var body = '';
